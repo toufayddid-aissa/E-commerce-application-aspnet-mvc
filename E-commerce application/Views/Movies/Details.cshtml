@@ -1,0 +1,61 @@
+﻿@section Styles {
+<link rel="stylesheet" href="~/css/MoviesDetail.css" asp-append-version="true" />}
+
+@model Movie
+@{
+    ViewData["title"] = "Movies Details";
+}
+
+
+<figure class="movie">
+  <div class="movie__hero">
+    <img src="@Model.ImageURL" alt="Rambo" class="movie__img">
+  </div>
+  <div class="movie__content">
+    <div class="movie__title">
+      <h1 class="heading__primary">@Model.Cinema.Name<i class="fas fa-fire"></i></h1>
+      <div class="movie__tag movie__tag--1">@Model.MovieCategorie</div>
+      
+    </div>
+    <p class="movie__description">
+      @Model.Description
+    </p>
+    <div class="movie__details">
+      <p class="movie__detail"><span class="icons icons-red"><i class="fas fa-camera-retro"></i> </span> @Model.StartDate </p>
+      <p class="movie__detail"><span class="icons icons-grey"><i class="fas fa-clock"></i> </span>@Model.EndDate</p>
+      <p class="movie__detail"><span class="icons icons-yellow"><i class="fas fa-file-invoice-dollar"></i>
+        </span>@{
+                                    var isAvailable = "";
+                                    if(@Model.StartDate >= DateTime.Now)
+                                    {
+                                         isAvailable = "Upcomming" ;
+                                    }
+                                    else
+                                    {
+                                        isAvailable = "Available";
+                                    }
+
+                                }
+                         status :   @isAvailable</p>
+    </div>
+     <div class="movie__details">
+            @foreach(var itm in @Model.Actors_Movies)
+            {
+                <p class="movie__detail"><span class="icons icons-red"><i class="fas fa-camera-retro"></i> </span> <a asp-controller = "Actors" asp-action  = "Details" asp-route-id = "@itm.Actor.Id" ><img class = "rounded-circle" src = "@itm.Actor.ProfilePictureURL"  style = "width: 75px" alt = "actor @itm.Actor.FullName"  /></a></p>
+            }
+            
+     
+    </div>
+       <div class="movie__details">
+           
+                <p class="movie__detail"><span class="icons icons-red"><i class="fas fa-camera-retro"></i> <a class = "btn btn-outline-secondary" asp-action  = "Index"> show all</a> </span>  </p>
+                <p class="movie__detail"><span class="icons icons-red"><i class="fas fa-camera-retro"></i> </span> <a  asp-action = "Edit" asp-route-id = "@Model.Id" class="btn btn-outline-secondary rounded-0 float-right">Edit</a>   </p>
+                <p class="movie__detail"><span class="icons icons-red"><i class="fas fa-camera-retro"></i> </span> <a  asp-action = "Edit" asp-route-id = "@Model.Id" class="btn btn-outline-secondary rounded-0 float-right"> Add to Carte @Model.Price.ToString("c")</a>   </p>
+
+
+            
+     
+    </div>
+  </div>
+  <div class="movie__price">@Model.Price.ToString("c")</div>
+</figure>

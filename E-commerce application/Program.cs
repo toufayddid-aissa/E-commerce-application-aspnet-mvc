@@ -1,4 +1,22 @@
+using E_commerce_application.Data;
+using E_commerce_application.Data.Services;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
+// add DbContexte
+
+
+
+
+
+builder.Services.AddDbContext<AddDbContext>(
+        options => options.UseSqlServer("name=ConnectionStrings:DefaultConnectionString"));
+
+builder.Services.AddScoped<IActorsService,ActorService>();
+builder.Services.AddScoped<IProducersService, ProducerService>();
+builder.Services.AddScoped<ICinemaService, CinemaService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -22,6 +40,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Movies}/{action=Index}/{id?}");
+AddDbInitial.Seed(app);
 
 app.Run();

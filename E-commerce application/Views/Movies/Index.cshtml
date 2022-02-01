@@ -1,0 +1,66 @@
+﻿@*Define modele*@
+@model IEnumerable<Movie>
+
+
+@*Define view data*@
+@{
+    ViewData["title"] = "Movies";
+}
+<div class="row">
+@foreach (var item in Model)
+{
+  
+    <div class="col-sm-4" >
+    <div class="card"  style="width: 25rem; margin-bottom :25px ">
+      <div class="form-group" style = "background-color:red ;height: 50px;"> 
+          <span> @item.Name</span>
+          <a class = "float-end" asp-action = "Edit" asp-route-id = "@item.Id" > <i class="bi bi-plus-circle"></i> </a>
+      </div>
+      <div class="card-body">
+        <div style = "display : flex">
+        <img src="@item.ImageURL" class="card-img-top" alt="..." style="width: 12rem;" />
+        <div>
+         <p> @item.Description</p>
+         <p> @item.Price</p>
+         <p>@item.StartDate</p>
+         <p> @item.EndDate</p>
+         <p> @item.Cinema.Name</p>
+                            <p> @{
+                                    var isAvailable = "";
+                                    if(@item.StartDate >= DateTime.Now)
+                                    {
+                                         isAvailable = "Upcomming" ;
+                                    }
+                                    else
+                                    {
+                                        isAvailable = "Available";
+                                    }
+
+                                }
+                         status :   @isAvailable
+         </p>
+
+
+         
+
+        </div>
+
+
+
+        </div>
+     <div  role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary "> <i class="bi bi-pen"></i> Add to cart (@item.Price.ToString("c"))</button>
+                
+                <a asp-action = "Details" asp-route-id = "@item.Id" class="btn btn-info"> <i class="bi bi-ticket-detailed"></i> show Details</a>
+       </div>
+      </div> 
+    </div>
+  </div>
+  
+}
+
+
+</div>
+<div style = "position:fixed ; right:25px ; bottom:25px" >
+ <a asp-controller = "Movies" asp-action = "Create" class ="btn btn-primary" >  <i class="bi bi-plus-circle-fill"></i> ADD </a>
+</div>

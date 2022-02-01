@@ -1,0 +1,39 @@
+﻿@model Producer
+@{
+ViewData["title"] = "Delete  Producer";
+}
+
+
+<div class="card">  
+    <div class="card-header">  
+        <h4>Details Producer @Model.FullName</h4>  
+    </div>  
+    <div class="card-body">  
+      
+        
+            <div class="form-group">  
+                <label asp-for="ProfilePictureURL" class="label-control"></label>  
+                <input asp-for="ProfilePictureURL" class="form-control"  readonly/>  
+                <span asp-validation-for="ProfilePictureURL" class="text-danger"></span>  
+            </div>  
+            <div class="form-group">  
+                <label asp-for="FullName" class="label-control"></label>  
+                <input asp-for="FullName" class="form-control" readonly />  
+                <span asp-validation-for="FullName" class="text-danger"></span>  
+            </div>  
+            <div class="form-group">  
+                <label asp-for="Bio" class="label-control"></label>  
+                <textarea asp-for="Bio" class="form-control" readonly></textarea>  
+                <span asp-validation-for="Bio" class="text-danger"></span>  
+            </div>  
+            <div>  
+                <a class = "btn btn-outline-secondary" asp-action  = "Index"> show all</a>
+                <form asp-action = "DeleteConfirm">
+                <input type = "hidden" value  = "@Model.Id" />
+                <Button  asp-action = "DeleteConfirm" asp-route-id = "@Model.Id" class="btn btn-sm btn-primary rounded-0 float-right">Confirm</Button>  
+                </form>
+            </div>  
+          
+    </div>  
+</div>  
+
